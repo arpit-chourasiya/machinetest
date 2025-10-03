@@ -4,8 +4,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const connectDb = require("./config/dbConfig");
 
 dotenv.config();
+connectDb();
 
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
@@ -14,11 +16,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB connection error:", err));
 
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
